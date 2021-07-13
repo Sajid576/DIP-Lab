@@ -27,6 +27,22 @@ temp_of_A_image = insertShape(temp_of_A_image,'Line',[x1 y1 x2 y2],'LineWidth',2
 temp_of_A_image = insertShape(temp_of_A_image,'Line',[x2 y2 x3 y3],'LineWidth',2,'Color','blue');
 temp_of_A_image = insertShape(temp_of_A_image,'Line',[x1 y1 x3 y3],'LineWidth',2,'Color','blue');
 
+temp_x1=x1;
+temp_x2=x2;
+temp_y1=y1;
+temp_y2=y2;
+imshow(temp_of_A_image);
+while temp_y1 ~=y3
+temp_x1=temp_x1+1;
+temp_x2=temp_x2-1;
+temp_y1=temp_y1-1;
+temp_y2=temp_y2-1;
+
+temp_of_A_image = insertShape(temp_of_A_image,'Line',[temp_x1 temp_y1 temp_x2 temp_y2],'LineWidth',2,'Color','blue');
+
+end
+
+
 imshow(temp_of_A_image);
 
 
