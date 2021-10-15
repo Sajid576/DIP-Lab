@@ -1,11 +1,12 @@
+% histogram equalization
+
 clc;    % Clear the command window.
 close all;  % Close all figures (except those of imtool.)
 imtool close all;  % Close all imtool figures if you have the Image Processing Toolbox.
 clear;  % Erase all existing variables. Or clearvars if you want.
 
-% a) Read the image ‘cameraman.png’
+% a) Read the image ï¿½cameraman.pngï¿½
 x=imread('cameraman.png');
-x_copy=x;
 
 figure(1);
 subplot(1,2,1);
@@ -23,30 +24,34 @@ for i=1:r
     end
 
 end
-%copying the histogram of input image
-copy_h=h;
+
 
  figure(2);
 subplot(1,2,1);
  stem(n, h);
- drawnow limitrate;
+
  title('Histogram of Original Image');
 % c) Compute Probability Distribution Function (PDF)
 for i=1:256
     h(i)=h(i)/total_no_of_pixels;
 end
+
 % d) Compute Cumulative Distribution Function (CDF)
 temp=h(1);
 for i=2:256
     temp=temp+h(i);
     h(i)=temp;
 end
+
+
+% image matrix for equalized image
 y=uint8(zeros(r,c));
-%Mapping
+
+% e) Multiply each CDF by L-1
+% f) Round the value
 for i=1:r
     for j=1:c
-        % e) Multiply each CDF by L-1
-        % f) Round the value
+       
         y(i,j)=round(h(x(i,j)+1)*255);
     end
 end

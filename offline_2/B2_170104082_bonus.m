@@ -1,4 +1,4 @@
-
+% Histogram specification of two images
 
 clc;    % Clear the command window.
 close all;  % Close all figures (except those of imtool.)
@@ -134,10 +134,82 @@ title('After Histogram Equalization(My desired image)');
 % Now match the histogram of original image with histogram of my
 % desired image.
 
+
+
+new_x=uint8(zeros(r,c));
+new_x_hist=zeros(1,256);
+n=0:255; 
+for i=1:256
+    
+        inp=x_eql_hist(i);
+        target_arr=my_pic_eql_hist;
+        [new_val,~]=find_target_val(inp,target_arr);
+        new_x_hist(i)=new_val;
+    
+end
+
+
 figure(2);
-matched_img = imhistmatch(x,my_pic);
-imshow(matched_img);
-imhist(matched_img);
+subplot(1,2,1);
+stem(n, new_x_hist);
+title('New histogram of original image(After Matching)');
+
+function [vv,key] = find_target_val(val,target)
+    MAX=max(target(:));
+    MIN=min(target(:));
+    
+    key = any(target==val) ;
+    flag=0;
+    if(key==0)
+        new_value = val+1;
+        while true
+            if(new_value>MAX)
+                break;
+            end
+            key = any(target==new_value) ;
+            if( key==1)
+                flag=1;
+                break;
+            end
+            new_value=new_value+1;
+        
+        end
+        
+        if(key==0)
+            new_value = val-1;
+            while true
+                 if(new_value<MIN)
+                    break;
+                end
+                key = any(target==new_value) ;
+                if( key==1)
+                    flag=1;
+                    break;
+                end
+                new_value=new_value-1;
+
+            end
+        end
+         
+    end
+    if(flag==0)
+        vv=val;
+    else
+        vv=new_value;
+    end
+    
+    return ;
+end
+
+
+
+
+
+
+
+
+
+
 
 
 

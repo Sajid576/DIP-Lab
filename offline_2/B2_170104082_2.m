@@ -13,13 +13,12 @@ I = im2double(I);
 A = min(I(:));
 B = max(I(:));
 D = B - A;
-M = 255;
+M = 2^8-1;
 R = I - A;
 R = R./D;
 R = R.*M;
 R = R + A;
 R = uint8(R);
-
 
 % ploting figures  
 figure();
